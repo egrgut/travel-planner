@@ -3,9 +3,9 @@
 function TripPage() {
     return (
         <select>
-            <TripCard/>
-            <TripTodo/>
-            <BudgetCard/>
+            {/*<TripCard/>*/}
+            {/*<TripTodo/>*/}
+            {/*<BudgetCard/>*/}
         </select>
     )
 }

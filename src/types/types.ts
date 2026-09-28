@@ -1,11 +1,11 @@
 export type TripStatus =
-    | 'business trip'
-    | 'vacation trip';
+    | 'Business trip'
+    | 'Vacation trip';
 
 export type TodoStatus =
-    | 'complete'
-    | 'canceled'
-    | 'next time'
+    | 'Complete'
+    | 'Canceled'
+    | 'Next time'
 
 export type Places = {
     title: string,

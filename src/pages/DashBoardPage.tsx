@@ -1,7 +1,16 @@
 //TODO
 
-function DashBoardPage(){
-    return
+import {useAppSelector} from "../app/hooks.ts";
+import TripCard from "../components/TripCard.tsx";
+
+function DashBoardPage() {
+    const trips = useAppSelector((state) => state.trips.items);
+    return (
+        <div>
+            <h2>Dashboard</h2>
+            {trips.map(trip => <TripCard key={trip.id} trip={trip}></TripCard>)}
+        </div>
+    )
 }
 
 export default DashBoardPage;

@@ -2,14 +2,14 @@ import type {Trip} from "../../types/types.ts";
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
 export type TripsState = {
-    trips: Trip[];
+    items: Trip[];
 }
 
 const initialState: TripsState = {
-    trips: [
+    items: [
         {
             id: "1",
-            status: "business trip",
+            status: "Business trip",
             country: "United Kingdom",
             city: "London",
             days: [],
@@ -27,16 +27,16 @@ const tripSlice = createSlice({
     initialState,
     reducers: {
         addTrip: (state, action: PayloadAction<Trip>) => {
-            state.trips.push(action.payload);
+            state.items.push(action.payload);
         },
         editTrip: (state, action: PayloadAction<Trip>) => {
-            const  index = state.trips.findIndex(trip => trip.id === action.payload.id);
+            const  index = state.items.findIndex(trip => trip.id === action.payload.id);
             if (index > -1) {
-                state.trips[index] = action.payload;
+                state.items[index] = action.payload;
             }
         },
         deleteTrip: (state, action: PayloadAction<string>) => {
-            state.trips= state.trips.filter(trip=>trip.id !== action.payload);
+            state.items= state.items.filter(trip=>trip.id !== action.payload);
             }
         }
 })

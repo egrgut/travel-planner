@@ -2,11 +2,16 @@
 // Add weather widget that change weather on specific trip
 
 import {Outlet} from "react-router";
+import TripList from "./TripList.tsx";
 
-function AppLayout(){
+function AppLayout() {
     return (
-        <Outlet/>
+        <div>
+            <TripList/>
+            <Outlet/>
+        </div>
     )
 }
+
 
 export default AppLayout;
