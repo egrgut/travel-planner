@@ -1,9 +1,9 @@
 import {configureStore} from "@reduxjs/toolkit";
+import tripReducer from "../features/trip/tripSlice.ts";
 
 export const store = configureStore({
-    //TODO
-    reducer: {
-
+    reducer:{
+        trips: tripReducer,
     }
 })
 
