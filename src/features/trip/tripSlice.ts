@@ -12,6 +12,7 @@ const initialState: TripsState = {
             status: "Business trip",
             country: "United Kingdom",
             city: "London",
+            persons: 1,
             days: [],
             todo: [],
             budget: 3000,

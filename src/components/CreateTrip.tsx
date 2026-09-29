@@ -14,6 +14,7 @@ function CreateTrip({onClose}: CreateTripProps) {
 
     const [city, setCity] = useState('');
     const [country, setCountry] = useState('');
+    const [persons, setPersons] = useState(1);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [status, setStatus] = useState<TripStatus>('Vacation trip');
@@ -27,6 +28,7 @@ function CreateTrip({onClose}: CreateTripProps) {
             country: country,
             city: city,
             status: status,
+            persons: persons,
             startDate: startDate,
             endDate: endDate,
             days: [],
@@ -47,6 +49,10 @@ function CreateTrip({onClose}: CreateTripProps) {
                 <option value="Vacation trip">Vacation trip</option>
                 <option value="Business trip">Business trip</option>
             </select>
+            <label>Persons
+                <input value={persons} onChange={(e) => setPersons(Number(e.target.value))} type="number"
+                       placeholder="Add Persons"/>
+            </label>
             <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date"
                    placeholder="Add Start date"/>
             <input value={endDate} onChange={(e) => setEndDate(e.target.value)} type="date" placeholder="Add End date"/>

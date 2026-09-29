@@ -1,4 +1,5 @@
 import type {Trip} from "../types/types.ts";
+import {NavLink} from "react-router";
 
 type TripSidebarItemProps = {
     trip: Trip;
@@ -6,6 +7,7 @@ type TripSidebarItemProps = {
 
 function TripSidebarItem({trip}: TripSidebarItemProps) {
     return (
+        <NavLink to={`/trips/${trip.id}`}>
         <div>
             <p>
                 {trip.city}
@@ -14,6 +16,7 @@ function TripSidebarItem({trip}: TripSidebarItemProps) {
                 {trip.startDate}
             </p>
         </div>
+        </NavLink>
     )
 }
 

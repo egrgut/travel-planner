@@ -33,6 +33,7 @@ export type Expense = {
 export type Trip = {
     id: string,
     status: TripStatus,
+    persons: number,
     country: string,
     city: string,
     days: DayProgram[],

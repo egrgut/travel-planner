@@ -10,12 +10,13 @@ const TripList = () => {
 
     return (
         <>
-            <ul>
-                {trips.map(trip => <TripSidebarItem key={trip.id} trip={trip}></TripSidebarItem>)}
-            </ul>
             <button onClick={() => setIsCreatingTrip(true)}>Add new</button>
             {isCreatingTrip && <CreateTrip onClose={() => setIsCreatingTrip(false)}></CreateTrip>
             }
+            <p>TRIPS</p>
+            <ul>
+                {trips.map(trip => <TripSidebarItem key={trip.id} trip={trip}></TripSidebarItem>)}
+            </ul>
         </>
     )
 

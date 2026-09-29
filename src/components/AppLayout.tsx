@@ -8,6 +8,7 @@ function AppLayout() {
     return (
         <div>
             <TripList/>
+            <button>Dashboard</button>
             <Outlet/>
         </div>
     )
