@@ -2,47 +2,66 @@ import * as React from "react";
 import {useState} from "react";
 import type {Trip, TripStatus} from "../types/types.ts";
 import {useAppDispatch} from "../app/hooks.ts";
-import {addTrip} from "../features/trip/tripSlice.ts";
+import {addTrip, editTrip} from "../features/trip/tripSlice.ts";
 
 
 type CreateTripProps = {
-    onClose: () => void
+    onClose: () => void;
+    initialTrip?: Trip;
 }
 
-function CreateTrip({onClose}: CreateTripProps) {
+function CreateTrip({onClose, initialTrip}: CreateTripProps) {
     const dispatch = useAppDispatch();
-
-    const [city, setCity] = useState('');
-    const [country, setCountry] = useState('');
-    const [persons, setPersons] = useState(1);
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [status, setStatus] = useState<TripStatus>('Vacation trip');
-    const [budget, setBudget] = useState(0);
+    const [city, setCity] = useState(initialTrip?.city ?? '');
+    const [country, setCountry] = useState(initialTrip?.country ?? '');
+    const [persons, setPersons] = useState(initialTrip?.persons ?? 1);
+    const [startDate, setStartDate] = useState(initialTrip?.startDate ?? '');
+    const [endDate, setEndDate] = useState(initialTrip?.endDate ?? '');
+    const [status, setStatus] = useState<TripStatus>(initialTrip?.status ?? 'Vacation trip');
+    const [budget, setBudget] = useState(initialTrip?.budget ?? 0);
 
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newTrip: Trip = {
-            id: crypto.randomUUID(),
-            country: country,
-            city: city,
-            status: status,
-            persons: persons,
-            startDate: startDate,
-            endDate: endDate,
-            days: [],
-            budget: budget,
-            todo: [],
-            expenses: [],
-        };
-        dispatch(addTrip(newTrip));
-        onClose();
 
-    }
+        if (initialTrip) {
+            const updatedTrip: Trip = {
+                id: initialTrip.id,
+                country: country,
+                city: city,
+                status: status,
+                persons: persons,
+                startDate: startDate,
+                endDate: endDate,
+                budget: budget,
+                days: initialTrip.days,
+                todo: initialTrip.todo,
+                expenses: initialTrip.expenses,
+            };
+            dispatch(editTrip(updatedTrip));
+        } else {
+            const newTrip: Trip = {
+                id: crypto.randomUUID(),
+                country: country,
+                city: city,
+                status: status,
+                persons: persons,
+                startDate: startDate,
+                endDate: endDate,
+                days: [],
+                budget: budget,
+                todo: [],
+                expenses: [],
+            };
+            dispatch(addTrip(newTrip));
+        }
+
+        onClose();
+    };
+
     return (
         <form onSubmit={handleSubmit}>
-            <h3>New trip</h3>
+            <h3>{initialTrip ? "Edit trip" : "New trip"}</h3>
             <input value={country} onChange={(e) => setCountry(e.target.value)} type="text" placeholder="Add Country"/>
             <input value={city} onChange={(e) => setCity(e.target.value)} type="text" placeholder="Add City"/>
             <select value={status} onChange={(e) => setStatus(e.target.value as TripStatus)}>
@@ -60,7 +79,7 @@ function CreateTrip({onClose}: CreateTripProps) {
                 <input value={budget} onChange={(e) => setBudget(Number(e.target.value))} type="number"
                        placeholder="Add Budget"/>
             </label>
-            <button type="submit">Add</button>
+            <button type="submit">{initialTrip ?"Save":"Add"}</button>
             <button type="button" onClick={onClose}>Close</button>
         </form>
     )
