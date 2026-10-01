@@ -8,12 +8,14 @@ export type TodoStatus =
     | 'Next time'
 
 export type Places = {
+    id: string,
     title: string,
-    description: string,
+    description?: string,
 }
 
 export type DayProgram = {
     id: string,
+    title?: string;
     dayNumber: number,
     date: string,
     place: Places[],

@@ -1,14 +1,15 @@
 //TODO
 // Add weather widget that change weather on specific trip
 
-import {Outlet} from "react-router";
+import {Outlet, useNavigate} from "react-router";
 import TripList from "./TripList.tsx";
 
 function AppLayout() {
+    const navigate=useNavigate();
     return (
         <div>
             <TripList/>
-            <button>Dashboard</button>
+            <button onClick={()=>navigate("/")}>Dashboard</button>
             <Outlet/>
         </div>
     )
