@@ -69,18 +69,34 @@ function CreateTrip({onClose, initialTrip}: CreateTripProps) {
                 <option value="Business trip">Business trip</option>
             </select>
             <label>Persons
-                <input value={persons} onChange={(e) => setPersons(Number(e.target.value))} type="number"
+                <input value={persons} onChange={(e) =>
+                    setPersons(Math.max(0, Number(e.target.value)))}
+                       type="number"
+                       min="0"
                        placeholder="Add Persons"/>
             </label>
-            <input value={startDate} onChange={(e) => setStartDate(e.target.value)} type="date"
+            <input value={startDate} onChange={(e) =>
+                setStartDate(e.target.value)}
+                   type="date"
                    placeholder="Add Start date"/>
-            <input value={endDate} onChange={(e) => setEndDate(e.target.value)} type="date" placeholder="Add End date"/>
+            <input value={endDate} onChange={(e) =>
+                setEndDate(e.target.value)}
+                   type="date"
+                   placeholder="Add End date"/>
             <label>Budget
-                <input value={budget} onChange={(e) => setBudget(Number(e.target.value))} type="number"
+                <input value={budget} onChange={(e) =>
+                    setBudget(Math.max(0, Number(e.target.value)))}
+                       type="number"
+                       min="0"
                        placeholder="Add Budget"/>
             </label>
-            <button type="submit">{initialTrip ?"Save":"Add"}</button>
-            <button type="button" onClick={onClose}>Close</button>
+            <button
+                type="submit">{initialTrip ? "Save" : "Add"}
+            </button>
+            <button
+                type="button" onClick={onClose}>
+                Close
+            </button>
         </form>
     )
 }
