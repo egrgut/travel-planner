@@ -1,7 +1,7 @@
 import type {DayProgram} from '../types/types.ts';
 import {useParams} from "react-router";
 import {useAppDispatch} from "../app/hooks.ts";
-import {addPlace} from "../features/trip/tripSlice.ts";
+import {addPlace, deletePlace} from "../features/trip/tripSlice.ts";
 import {useState} from "react";
 
 type DayCardProps = {
@@ -27,6 +27,10 @@ function DayCard({day}: DayCardProps) {
         setPlaceDescription('');
         setIsCreatingPlace(false);
     }
+    const handleDeletePlace = (placeId: string) => {
+        if (!id) return;
+        dispatch(deletePlace({tripId: id, dayId: day.id, placeId: placeId}));
+    }
 
 
     return (
@@ -36,6 +40,7 @@ function DayCard({day}: DayCardProps) {
                 <div key={place.id}>
                     <h4>{place.title}</h4>
                     <p>{place.description}</p>
+                    <button onClick={() => handleDeletePlace(place.id)}>Delete</button>
                 </div>
             ))}
             {isCreatingPlace ? (
