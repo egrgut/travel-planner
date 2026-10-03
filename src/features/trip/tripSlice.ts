@@ -55,21 +55,34 @@ const tripSlice = createSlice({
                 }
             }
         },
+        editPlace: (state, action: PayloadAction<{ tripId: string; dayId: string, place: Places }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId);
+            if (tripIndex > -1) {
+                const days = state.items[tripIndex].days;
+                const dayIndex = days.findIndex(day => day.id === action.payload.dayId)
+                if (dayIndex > -1) {
+                    const places = days[dayIndex].place;
+                    const placesIndex = places.findIndex(place => place.id === action.payload.place.id);
+                    if (placesIndex > -1) {
+                        places[placesIndex] = action.payload.place;
+                    }
+                }
+            }
+        },
         deletePlace: (state, action: PayloadAction<{ tripId: string; dayId: string, placeId: string }>) => {
             const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId);
             if (tripIndex > -1) {
-                const days =state.items[tripIndex].days;
-                const dayIndex=days.findIndex(day => day.id === action.payload.dayId)
-                if(dayIndex>-1){
-                    days[dayIndex].place=days[dayIndex].place.filter(place=>place.id!==action.payload.placeId)
+                const days = state.items[tripIndex].days;
+                const dayIndex = days.findIndex(day => day.id === action.payload.dayId)
+                if (dayIndex > -1) {
+                    days[dayIndex].place = days[dayIndex].place.filter(place => place.id !== action.payload.placeId)
                 }
             }
         }
-    }
-
+    },
 })
 
-export const {addTrip, editTrip, deleteTrip, addDay, addPlace, deletePlace} = tripSlice.actions;
+export const {addTrip, editTrip, deleteTrip, addDay, addPlace, deletePlace, editPlace} = tripSlice.actions;
 export default tripSlice.reducer;
 
 
