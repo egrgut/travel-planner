@@ -78,11 +78,33 @@ const tripSlice = createSlice({
                     days[dayIndex].place = days[dayIndex].place.filter(place => place.id !== action.payload.placeId)
                 }
             }
+        },
+        movePlace: (state, action: PayloadAction<{
+            tripId: string;
+            dayId: string;
+            placeId: string;
+            direction: 'up' | 'down'
+        }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId);
+            if (tripIndex > -1) {
+                const days = state.items[tripIndex].days;
+                const dayIndex = days.findIndex(day => day.id === action.payload.dayId);
+                if (dayIndex > -1) {
+                    const places = days[dayIndex].place;
+                    const placesIndex = places.findIndex(placeId => placeId.id === action.payload.placeId);
+                    if (placesIndex > -1) {
+                        const targetIndex = action.payload.direction === 'up' ? placesIndex - 1 : placesIndex + 1;
+                        if (targetIndex >= 0 && targetIndex < places.length) {
+                            places.splice(targetIndex, 0, places.splice(placesIndex, 1)[0]);
+                        }
+                    }
+                }
+            }
         }
-    },
+    }
 })
 
-export const {addTrip, editTrip, deleteTrip, addDay, addPlace, deletePlace, editPlace} = tripSlice.actions;
+export const {addTrip, editTrip, deleteTrip, addDay, addPlace, deletePlace, editPlace, movePlace} = tripSlice.actions;
 export default tripSlice.reducer;
 
 

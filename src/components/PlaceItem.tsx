@@ -1,25 +1,24 @@
 import type {Places} from "../types/types.ts";
 import {useAppDispatch} from "../app/hooks.ts";
-import {deletePlace, editPlace} from "../features/trip/tripSlice.ts";
+import {deletePlace, editPlace, movePlace} from "../features/trip/tripSlice.ts";
 import {useState} from "react";
 
 type PlaceItemProps = {
     tripId: string;
     dayId: string;
     place: Places;
+    isFirst: boolean;
+    isLast: boolean;
 };
 
 
-function PlaceItem({tripId, dayId, place}: PlaceItemProps) {
-    // const {id}=useParams();
-    // const [placeTitle, setPlaceTitle] = useState();
-    // const [placeDescription, setPlaceDescription] = useState();
+
+function PlaceItem({tripId, dayId, place,isFirst,isLast}: PlaceItemProps) {
     const [isEditing, setIsEditing] = useState(false);
     const [title, setTitle] = useState(place.title);
     const [description, setDescription] = useState(place.description ?? '');
     const dispatch = useAppDispatch();
     const handleDeletePlace = (placeId: string) => {
-        // if (!id) return;
         dispatch(deletePlace({tripId, dayId, placeId: placeId}));
     }
     const handleSavePlace = () => {
@@ -31,6 +30,10 @@ function PlaceItem({tripId, dayId, place}: PlaceItemProps) {
         setIsEditing(false);
 
     }
+    const handleMovePlace=(direction: 'up'|'down')=>{
+        dispatch(movePlace({tripId, dayId, placeId: place.id, direction}));
+    }
+
     return isEditing ? (
         <div>
             <input value={title} onChange={(e) => setTitle(e.target.value)}/>
@@ -43,6 +46,8 @@ function PlaceItem({tripId, dayId, place}: PlaceItemProps) {
             <h3>{place.title}</h3>
             <p>{place.description}</p>
             <button onClick={() => handleDeletePlace(place.id)}>Delete</button>
+            <button disabled={isFirst} onClick={()=>handleMovePlace('up')}>↑</button>
+            <button disabled={isLast} onClick={()=>handleMovePlace('down')}>↓</button>
             <button onClick={() => setIsEditing(true)}>Edit</button>
         </div>)
 }

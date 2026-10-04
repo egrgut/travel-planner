@@ -32,8 +32,13 @@ function DayCard({day}: DayCardProps) {
     return (
         <div>
             <h3>Day {day.dayNumber}: {day.date}</h3>
-            {day.place.map((place) => (
-                <PlaceItem key={place.id} tripId={id ?? ''} dayId={day.id} place={place}/>
+            {day.place.map((place, index) => (
+                <PlaceItem key={place.id}
+                           tripId={id ?? ''}
+                           dayId={day.id}
+                           place={place}
+                           isFirst={index === 0} isLast={index === day.place.length - 1}
+                />
             ))}
             {isCreatingPlace ? (
                 <div>
