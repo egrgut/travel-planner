@@ -1,4 +1,3 @@
-//TODO
 import type {Trip} from "../types/types.ts";
 
 type TripCardProps = {
@@ -14,7 +13,7 @@ function TripCard({trip}: TripCardProps) {
             <p>City: {trip.city}</p>
             <p>From: {trip.startDate}</p>
             <p>To: {trip.endDate}</p>
-            <p>Budget: {trip.budget}$</p>
+            <p>Budget: {trip.budget} $</p>
         </div>
 
     )

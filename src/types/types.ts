@@ -28,6 +28,7 @@ export type TodoList = {
 }
 
 export type Expense = {
+    id: string,
     title: string,
     cost: number,
 }

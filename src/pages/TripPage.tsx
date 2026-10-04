@@ -1,4 +1,4 @@
-//TODO
+
 import {useNavigate, useParams} from "react-router";
 import {useAppDispatch, useAppSelector} from "../app/hooks.ts";
 import NotFoundPage from "./NotFoundPage.tsx";
@@ -7,6 +7,7 @@ import {addDay, deleteTrip} from "../features/trip/tripSlice.ts";
 import {useState} from "react";
 import CreateTrip from "../components/CreateTrip.tsx";
 import DayCard from "../components/DayCard.tsx";
+import BudgetCard from "../components/BudgetCard.tsx";
 
 function TripPage() {
     const {id} = useParams();
@@ -45,6 +46,7 @@ function TripPage() {
                     <button onClick={() => setIsEditing(true)}>Edit</button>
                     <button onClick={handleDelete}>Delete</button>
                     <TripCard trip={trip}/>
+                    <BudgetCard trip={trip}/>
                     {
                         trip.days.map((day) =>
                             (<DayCard key={day.id} day={day}/>))

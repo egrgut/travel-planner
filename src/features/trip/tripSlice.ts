@@ -1,4 +1,4 @@
-import type {DayProgram, Places, Trip} from "../../types/types.ts";
+import type {DayProgram, Expense, Places, Trip} from "../../types/types.ts";
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
 export type TripsState = {
@@ -27,6 +27,7 @@ const tripSlice = createSlice({
     name: "trips",
     initialState,
     reducers: {
+        //CRUD TRIPS
         addTrip: (state, action: PayloadAction<Trip>) => {
             state.items.push(action.payload);
         },
@@ -39,6 +40,7 @@ const tripSlice = createSlice({
         deleteTrip: (state, action: PayloadAction<string>) => {
             state.items = state.items.filter(trip => trip.id !== action.payload);
         },
+        //CRUD PLACES
         addDay: (state, action: PayloadAction<{ tripId: string; day: DayProgram }>) => {
             const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId);
             if (tripIndex > -1) {
@@ -55,6 +57,7 @@ const tripSlice = createSlice({
                 }
             }
         },
+
         editPlace: (state, action: PayloadAction<{ tripId: string; dayId: string, place: Places }>) => {
             const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId);
             if (tripIndex > -1) {
@@ -100,11 +103,37 @@ const tripSlice = createSlice({
                     }
                 }
             }
+        },
+        //CRUD Expense
+        addExpense: (state, action: PayloadAction<{ tripId: string; expense: Expense }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
+            if (tripIndex > -1) {
+                state.items[tripIndex].expenses.push(action.payload.expense)
+            }
+        },
+        deleteExpense: (state, action: PayloadAction<{ tripId: string; expenseId: string }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
+            if (tripIndex > -1) {
+                state.items[tripIndex].expenses = state.items[tripIndex].expenses.filter(expense => expense.id !== action.payload.expenseId)
+            }
+        },
+        updateBudget: (state, action: PayloadAction<{ tripId: string; budget: number }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
+            if (tripIndex > -1) {
+                state.items[tripIndex].budget = action.payload.budget
+            }
         }
     }
 })
 
-export const {addTrip, editTrip, deleteTrip, addDay, addPlace, deletePlace, editPlace, movePlace} = tripSlice.actions;
+export const {
+    addTrip, editTrip,
+    deleteTrip, addDay,
+    addPlace, deletePlace,
+    editPlace, movePlace,
+    addExpense, deleteExpense, updateBudget
+} = tripSlice.actions;
+
 export default tripSlice.reducer;
 
 

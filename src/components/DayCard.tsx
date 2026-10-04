@@ -21,7 +21,6 @@ function DayCard({day}: DayCardProps) {
             id: crypto.randomUUID(),
             title: placeTitle,
             description: placeDescription,
-
         }
         dispatch(addPlace({tripId: id, dayId: day.id, place: newPlace}));
         setPlaceTitle('');
