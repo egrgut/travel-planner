@@ -1,4 +1,4 @@
-import type {DayProgram, Expense, Places, Trip} from "../../types/types.ts";
+import type {DayProgram, Expense, Places, TodoList, TodoStatus, Trip} from "../../types/types.ts";
 import {createSlice, type PayloadAction} from "@reduxjs/toolkit";
 
 export type TripsState = {
@@ -31,12 +31,14 @@ const tripSlice = createSlice({
         addTrip: (state, action: PayloadAction<Trip>) => {
             state.items.push(action.payload);
         },
+
         editTrip: (state, action: PayloadAction<Trip>) => {
             const index = state.items.findIndex(trip => trip.id === action.payload.id);
             if (index > -1) {
                 state.items[index] = action.payload;
             }
         },
+
         deleteTrip: (state, action: PayloadAction<string>) => {
             state.items = state.items.filter(trip => trip.id !== action.payload);
         },
@@ -47,6 +49,7 @@ const tripSlice = createSlice({
                 state.items[tripIndex].days.push(action.payload.day);
             }
         },
+
         addPlace: (state, action: PayloadAction<{ tripId: string; dayId: string; place: Places }>) => {
             const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId);
             if (tripIndex > -1) {
@@ -72,6 +75,7 @@ const tripSlice = createSlice({
                 }
             }
         },
+
         deletePlace: (state, action: PayloadAction<{ tripId: string; dayId: string, placeId: string }>) => {
             const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId);
             if (tripIndex > -1) {
@@ -111,18 +115,44 @@ const tripSlice = createSlice({
                 state.items[tripIndex].expenses.push(action.payload.expense)
             }
         },
+
         deleteExpense: (state, action: PayloadAction<{ tripId: string; expenseId: string }>) => {
             const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
             if (tripIndex > -1) {
                 state.items[tripIndex].expenses = state.items[tripIndex].expenses.filter(expense => expense.id !== action.payload.expenseId)
             }
         },
+
         updateBudget: (state, action: PayloadAction<{ tripId: string; budget: number }>) => {
             const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
             if (tripIndex > -1) {
                 state.items[tripIndex].budget = action.payload.budget
             }
-        }
+        },
+        //CRUD TODO
+        addTodo: (state, action: PayloadAction<{ tripId: string; todo: TodoList }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
+            if (tripIndex > -1) {
+                state.items[tripIndex].todo.push(action.payload.todo)
+            }
+        },
+
+        deleteTodo: (state, action: PayloadAction<{ tripId: string; todoId: string }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
+            if (tripIndex > -1) {
+                state.items[tripIndex].todo = state.items[tripIndex].todo.filter(todo => todo.id !== action.payload.todoId)
+            }
+        },
+
+        updateTodoStatus: (state, action: PayloadAction<{ tripId: string;todoId: string; status: TodoStatus }>) => {
+            const tripIndex = state.items.findIndex(trip => trip.id === action.payload.tripId)
+            if (tripIndex > -1) {
+                const todoIndex = state.items[tripIndex].todo.findIndex(todo => todo.id === action.payload.todoId)
+                if (todoIndex > -1) {
+                    state.items[tripIndex].todo[todoIndex].status = action.payload.status
+                }
+            }
+        },
     }
 })
 
@@ -131,7 +161,8 @@ export const {
     deleteTrip, addDay,
     addPlace, deletePlace,
     editPlace, movePlace,
-    addExpense, deleteExpense, updateBudget
+    addExpense, deleteExpense, updateBudget,
+    addTodo, deleteTodo, updateTodoStatus
 } = tripSlice.actions;
 
 export default tripSlice.reducer;

@@ -6,6 +6,8 @@ export type TodoStatus =
     | 'Complete'
     | 'Canceled'
     | 'Next time'
+    | 'Waiting'
+    | 'In progress'
 
 export type Places = {
     id: string,

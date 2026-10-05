@@ -8,6 +8,7 @@ import {useState} from "react";
 import CreateTrip from "../components/CreateTrip.tsx";
 import DayCard from "../components/DayCard.tsx";
 import BudgetCard from "../components/BudgetCard.tsx";
+import TripTodoCard from "../components/TripTodo.tsx";
 
 function TripPage() {
     const {id} = useParams();
@@ -47,6 +48,8 @@ function TripPage() {
                     <button onClick={handleDelete}>Delete</button>
                     <TripCard trip={trip}/>
                     <BudgetCard trip={trip}/>
+                    <h3>Trip Todo</h3>
+                    <TripTodoCard trip={trip}/>
                     {
                         trip.days.map((day) =>
                             (<DayCard key={day.id} day={day}/>))
