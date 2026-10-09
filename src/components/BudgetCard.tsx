@@ -37,7 +37,7 @@ function BudgetCard({trip}: BudgetCardProps) {
                     </li>)}
             </ul>
             <input type="text" placeholder="add title" value={title} onChange={(e)=>setTitle(e.target.value)}/>
-            <input type="text" placeholder="add cost" value={cost} onChange={(e)=>setCost(Number(e.target.value))}/>
+            <input type="text" placeholder="add cost" value={cost} onChange={(e)=>setCost(Number(e.target.value))}/>$
             <button onClick={handleAddExpense}>Add Expense</button>
 
             <p>Budget: {trip.budget} $</p>
