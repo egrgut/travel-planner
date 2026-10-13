@@ -1,10 +1,19 @@
-import {configureStore} from "@reduxjs/toolkit";
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import tripReducer from "../features/trip/tripSlice.ts";
+import {loadState, saveState} from "./localStorage.ts";
+
+
+const rootReducer = combineReducers({
+    trips: tripReducer
+})
 
 export const store = configureStore({
-    reducer:{
-        trips: tripReducer,
-    }
+    reducer:rootReducer,
+    preloadedState: loadState()
+})
+
+store.subscribe(() => {
+    saveState(store.getState())
 })
 
 
